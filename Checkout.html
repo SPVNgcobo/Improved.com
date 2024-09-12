@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - AzizaKS-LTD</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-top">
+            <a href="Home.html" class="logo">
+                <img src="Aziza.jpg" alt="AKS LTD Logo">
+            </a>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><i class="fa fa-search"></i></button>
+            </div>
+            <div class="header-icons">
+                <a href="Cart.html" id="cart-icon" class="cart">
+                    Cart (<span id="cart-count">0</span>)
+                </a>
+                <span class="hamburger" onclick="toggleMenu()">&#9776;</span>
+            </div>
+        </div>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="Home.html" data-section="home">Home</a></li>
+                <li><a href="Login.html" data-section="login">Login</a></li>
+                <li><a href="Register.html" data-section="register">Register</a></li>
+                <li><a href="Orders.html" data-section="orders">Orders</a></li>
+                <li><a href="Confirmation.html" data-section="confirmation">Confirmation</a></li>
+                <li><a href="Checkout.html" data-section="checkout">Checkout</a></li>
+                <li><a href="My Account.html" data-section="myaccount">My Account</a></li>
+                <li><a href="Help Centre.html" data-section="helpcentre">Help Center</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="checkout" class="checkout">
+            <h2>Checkout</h2>
+            <form id="checkout-form" action="#" method="post">
+                <div class="checkout-section">
+                    <h3>Shipping Information</h3>
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" required>
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" required>
+                    <label for="zip">ZIP Code:</label>
+                    <input type="text" id="zip" name="zip" required>
+                    <label for="country">Country:</label>
+                    <input type="text" id="country" name="country" required>
+                </div>
+
+                <div class="checkout-section">
+                    <h3>Payment Details</h3>
+                    <label for="card-number">Card Number:</label>
+                    <input type="text" id="card-number" name="card-number" required>
+                    <label for="expiry-date">Expiry Date:</label>
+                    <input type="text" id="expiry-date" name="expiry-date" required>
+                    <label for="cvv">CVV:</label>
+                    <input type="text" id="cvv" name="cvv" required>
+                </div>
+
+                <div class="checkout-section">
+                    <h3>Order Summary</h3>
+                    <div id="order-summary" class="order-summary">
+                        <!-- Order items will be dynamically inserted here -->
+                        <div class="order-total">
+                            <span>Total:</span>
+                            <span id="total-amount">R0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">Complete Purchase</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 AzizaKS-LTD. All rights reserved.</p>
+        <ul class="social-icons">
+            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+    </footer>
+</body>
+</html>

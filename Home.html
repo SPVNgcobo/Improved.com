@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AzizaKS-LTD - Home</title>
+    <link rel="icon" href="Aziza.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-top">
+            <div class="logo">
+                <a href="Home.html"><img src="Aziza.jpg" alt="AKS LTD Logo"></a>
+            </div>
+            <div class="search-bar">
+                <input type="text" name="query" placeholder="Search for products, brands, etc." required>
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="header-icons">
+                <a href="Cart.html" id="cart-icon" class="cart">Cart <span id="cart-count">(0)</span></a>
+                <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            </div>
+        </div>
+        <nav class="header-nav">
+            <ul id="nav-menu">
+                <li><a href="Home.html" data-section="home">Home</a></li>
+                <li><a href="Login.html" data-section="login">Login</a></li>
+                <li><a href="Register.html" data-section="register">Register</a></li>
+                <li><a href="Orders.html" data-section="orders">Orders</a></li>
+                <li><a href="Confirmation.html" data-section="confirmation">Confirmation</a></li>
+                <li><a href="Checkout.html" data-section="checkout">Checkout</a></li>
+                <li><a href="My Account.html" data-section="myaccount">My Account</a></li>
+                <li><a href="Help Centre.html" data-section="helpcentre">Help Center</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="products" class="products">
+            <h2>Our Products</h2>
+            <div class="product-grid">
+                <div class="product zoom">
+                    <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRQ1PypayHc5GSP4UExK4YIOp637hMPBYw-YrORLVRPDEDsUCTef__yn9y3UUdcfMh_ugLAmLEQKttRwnlK9_Ihx0zJr7IHZ1azr1IbIcq0LJTY9LXMgy0DtI4eevJQzOYu91rSJw&usqp=CAc" alt="MacBook Air 13" onclick="openZoomModal('https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRQ1PypayHc5GSP4UExK4YIOp637hMPBYw-YrORLVRPDEDsUCTef__yn9y3UUdcfMh_ugLAmLEQKttRwnlK9_Ihx0zJr7IHZ1azr1IbIcq0LJTY9LXMgy0DtI4eevJQzOYu91rSJw')">
+                    <h3>MacBook Air 13" Starlight</h3>
+                    <p>Price: R14,999.99</p>
+                    <p>Specifications: 8GB RAM, 256GB SSD, M2 Chip</p>
+                    <button class="view-specs" onclick="viewSpecifications('MacBook Air 13\" Starlight', '8GB RAM, 256GB SSD, M2 Chip')">View Specifications</button>
+                    <button class="add-to-cart" onclick="addToCart('MacBook Air 13\" Starlight', 14999.99)">Add to Cart</button>
+                </div>            
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2023 AzizaKS-LTD. All rights reserved.</p>
+            <p><a href="Privacy.html">Privacy Policy</a> | <a href="Terms.html">Terms & Conditions</a></p>
+            <div class="social-media">
+                <a href="https://facebook.com/yourpage" target="_blank" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com/yourprofile" target="_blank" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://instagram.com/yourprofile" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <script src="scripts.js"></script>
+</body>
+</html>
