@@ -3,7 +3,7 @@ name: Deploy to Firebase Hosting
 on:
   push:
     branches:
-      - main  # Trigger deployment when pushing to the main branch
+      - main  # Deploy only when changes are pushed to the main branch
 
 jobs:
   deploy:
@@ -11,12 +11,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Update to v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3  # Update to v3
         with:
-          node-version: '14'
+          node-version: '18'  # Specify Node.js 18 or 20
 
       - name: Install dependencies
         run: |
@@ -24,4 +24,6 @@ jobs:
           npm install
 
       - name: Deploy to Firebase
-        run: firebase deploy --token ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: firebase deploy
