@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -50,26 +50,42 @@
         setInterval(updateTime, 1000);
         updateTime(); // Call it once to set initial time
 
-        // Simulated detected objects (this would be replaced with actual detection logic)
-        const detectedObjects = ['Hand', 'Screen', 'Wall', 'Unidentifiable Object'];
+        // Simulated detected objects with corresponding image files
+        const detectedObjects = {
+            'Hand': 'hand.jpg',
+            'Screen': 'screen.jpg',
+            'Wall': 'wall.jpg',
+            'Unidentifiable Object': 'unknown.jpg'
+        };
 
         // Function to update the list of detected objects every 20 seconds
         function updateObjectList() {
             const objectList = document.getElementById('object-list');
             
             // Get a random object from the list to simulate detection
-            const randomObject = detectedObjects[Math.floor(Math.random() * detectedObjects.length)];
+            const objectNames = Object.keys(detectedObjects);
+            const randomObject = objectNames[Math.floor(Math.random() * objectNames.length)];
             
             // Create a new list item for the detected object
             const listItem = document.createElement('li');
-            listItem.textContent = randomObject;
+            
+            // Create an image element for the object
+            const objectImage = document.createElement('img');
+            objectImage.src = `images/${detectedObjects[randomObject]}`;
+            objectImage.alt = randomObject;
+            objectImage.style.width = '50px'; // Adjust size as needed
+            objectImage.style.marginRight = '10px'; // Space between image and text
+            
+            // Append the image and object name to the list item
+            listItem.appendChild(objectImage);
+            listItem.appendChild(document.createTextNode(randomObject));
             
             // Append the new object to the list
             objectList.appendChild(listItem);
         }
 
         // Update object list every 20 seconds
-        setInterval(updateObjectList, 10000);
+        setInterval(updateObjectList, 20000);
 
         // Simulate the first object detection when the page loads
         updateObjectList();
@@ -82,23 +98,21 @@
             window.location.href = 'index.html'; // Redirect to the sign-in page
         });
     </script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-<script>
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID",
-    measurementId: "YOUR_MEASUREMENT_ID"
-  };
-  firebase.initializeApp(firebaseConfig);
-</script>
 
-    
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script>
+      const firebaseConfig = {
+  apiKey: "AIzaSyDskj7mGuZ9JnbglGqoSVIHD_3lM1bE04w",
+  authDomain: "visualii-70dfb.firebaseapp.com",
+  databaseURL: "https://visualii-70dfb.firebaseio.com",
+  projectId: "visualii-70dfb",
+  storageBucket: "visualii-70dfb.appspot.com",
+  messagingSenderId: "1234567890", // This is your messaging sender ID
+  appId: "1:1234567890:web:abc123def456gh789", // This is your app ID
+};
+
+      firebase.initializeApp(firebaseConfig);
+    </script>
 </body>
 </html>
