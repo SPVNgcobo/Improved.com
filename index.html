@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Object Detection Display</title>
+    <title>Object Detection - Decoy Page</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 </head>
 <body>
-    <div id="main-container">
-        <h1>Object Detection Dashboard</h1>
+    <div id="decoy-container">
+        <h1>Object Detection</h1>
         
-        <!-- Display detected object with image -->
-        <div id="object-detection">
-            <p><strong>Detected Object:</strong></p>
-            <div id="object-display">
-                <img id="object-image" src="" alt="Detected Object Image" style="width: 150px; height: auto;">
-                <p id="object-name"></p>
-            </div>
+        <!-- Simulated Object Detection Status -->
+        <div id="status">
+            <p><strong>Simulated Object Detection:</strong></p>
+            <ul id="object-list">
+                <!-- Detected objects will be listed here -->
+            </ul>
         </div>
 
         <!-- Current Time Display -->
@@ -28,43 +29,41 @@
     </div>
 
     <script>
-        // Ensure image paths are correct relative to this HTML file
-        const detectedObjects = {
-            'Hand': 'hand.jpg',
-            'Screen': 'screen.jpg',
-            'Wall': 'wall.jpg',
-            'Unidentifiable Object': 'unidentified_object.jpg'
-        };
-
-        const objectNames = Object.keys(detectedObjects);
-        let currentObjectIndex = 0;
-
-        // Function to update the displayed object and image
-        function updateDetectedObject() {
-            const objectName = objectNames[currentObjectIndex];
-            const objectImage = detectedObjects[objectName];
-
-            document.getElementById('object-name').textContent = objectName;
-            document.getElementById('object-image').src = objectImage;
-
-            // Move to the next object in the list, looping back to the start if necessary
-            currentObjectIndex = (currentObjectIndex + 1) % objectNames.length;
-        }
-
-        // Update the detected object every 20 seconds
-        setInterval(updateDetectedObject, 20000);
-        updateDetectedObject(); // Initial call to display the first object
-
-        // Function to get the current time and update every second
+        // Function to get the current time and update the page every second
         function updateTime() {
             const currentTime = new Date().toLocaleTimeString();
             document.getElementById('current-time').innerText = currentTime;
         }
 
+        // Update time every second
         setInterval(updateTime, 1000);
-        updateTime(); // Initial call
+        updateTime(); // Call it once to set initial time
 
-        // Logout functionality
+        // Simulated detected objects (this would be replaced with actual detection logic)
+        const detectedObjects = ['Hand', 'Screen', 'Wall', 'Unknown Object', 'Door'];
+
+        // Function to update the list of detected objects every 20 seconds
+        function updateObjectList() {
+            const objectList = document.getElementById('object-list');
+            
+            // Get a random object from the list to simulate detection
+            const randomObject = detectedObjects[Math.floor(Math.random() * detectedObjects.length)];
+            
+            // Create a new list item for the detected object
+            const listItem = document.createElement('li');
+            listItem.textContent = randomObject;
+            
+            // Append the new object to the list
+            objectList.appendChild(listItem);
+        }
+
+        // Update object list every 20 seconds
+        setInterval(updateObjectList, 20000);
+
+        // Simulate the first object detection when the page loads
+        updateObjectList();
+
+        // Sign out function (for simulation)
         document.getElementById('logoutBtn').addEventListener('click', () => {
             alert("Logged out successfully.");
             window.location.href = 'index.html'; // Redirect to the sign-in page
