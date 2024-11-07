@@ -1,36 +1,83 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In</title>
+    <title>Object Detection - Decoy Page</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="signin-container">
-        <h1>Sign In</h1>
+    <div id="main-container">
+        <h1>Welcome to the Object Detection Dashboard</h1>
+        <p><strong>Sign-In Time:</strong> <span id="sign-in-time">Not available</span></p>
 
-        <!-- Sign In Form -->
-        <form id="signinForm">
-            <input type="text" id="username" placeholder="Username" required><br>
-            <input type="password" id="password" placeholder="Password" required><br>
-            <button type="submit">Sign In</button>
-			<p>Already have an account? <a href="signup.html">Sign in here</a></p>
-        </form>
+        <!-- Object Detection Status -->
+        <div id="status">
+            <p><strong>Simulated Object Detection:</strong></p>
+            <ul id="object-list"></ul>
+        </div>
+
+        <!-- Current Time Display -->
+        <div id="time">
+            <p><strong>Current Time:</strong> <span id="current-time"></span></p>
+        </div>
+
+        <button id="logoutBtn">Log Out</button>
     </div>
 
     <script>
-        document.getElementById('signinForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        // Initialize sign-in time and display
+        const signInTime = localStorage.getItem('signInTime') || new Date().toLocaleTimeString();
+        localStorage.setItem('signInTime', signInTime);
+        document.getElementById('sign-in-time').innerText = signInTime;
 
-            // Get the current time when sign-in occurs
-            const signInTime = new Date().toLocaleString();
+        // Function to update current time every second
+        function updateTime() {
+            const currentTime = new Date().toLocaleTimeString();
+            document.getElementById('current-time').innerText = currentTime;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
 
-            // Store sign-in time in local storage
-            localStorage.setItem('signInTime', signInTime);
+        // Object images and names for simulation
+        const detectedObjects = {
+            'Hand': 'hand.jpg',
+            'Screen': 'screen.jpg',
+            'Wall': 'wall.jpg',
+            'Unidentifiable Object': 'unknown.jpg'
+        };
 
-            // Redirect to main page after sign-in
-            window.location.href = 'main.html'; // Main page
+        // Function to update detected object list every 20 seconds
+        function updateObjectList() {
+            const objectList = document.getElementById('object-list');
+            const randomObject = Object.keys(detectedObjects)[Math.floor(Math.random() * Object.keys(detectedObjects).length)];
+
+            // Create list item with image for detected object
+            const listItem = document.createElement('li');
+            const objectImage = document.createElement('img');
+            objectImage.src = `images/${detectedObjects[randomObject]}`;
+            objectImage.alt = randomObject;
+            objectImage.style.width = '50px';
+            objectImage.style.marginRight = '10px';
+
+            listItem.appendChild(objectImage);
+            listItem.appendChild(document.createTextNode(randomObject));
+
+            // Add item to object list
+            objectList.appendChild(listItem);
+
+            console.log(`Added object: ${randomObject} with image: ${objectImage.src}`);
+        }
+        
+        // Trigger object list update every 20 seconds
+        setInterval(updateObjectList, 20000);
+        updateObjectList();
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('signInTime');
+            alert("Logged out successfully.");
+            window.location.href = 'index.html';
         });
     </script>
 </body>
