@@ -1,26 +1,22 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Object Detection - Decoy Page</title>
+    <title>Object Detection Display</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 </head>
 <body>
     <div id="main-container">
-        <h1>Welcome to the Object Detection Dashboard</h1>
-
-        <!-- Display the sign-in time -->
-        <p><strong>Sign-In Time:</strong> <span id="sign-in-time"></span></p>
-
-        <!-- Simulated Object Detection Status -->
-        <div id="status">
-            <p><strong>Simulated Object Detection:</strong></p>
-            <ul id="object-list">
-                <!-- Detected objects will be listed here -->
-            </ul>
+        <h1>Object Detection Dashboard</h1>
+        
+        <!-- Display detected object with image -->
+        <div id="object-detection">
+            <p><strong>Detected Object:</strong></p>
+            <div id="object-display">
+                <img id="object-image" src="" alt="Detected Object Image" style="width: 150px; height: auto;">
+                <p id="object-name"></p>
+            </div>
         </div>
 
         <!-- Current Time Display -->
@@ -32,88 +28,47 @@
     </div>
 
     <script>
-        // Retrieve sign-in time from local storage and display it
-        const signInTime = localStorage.getItem('signInTime');
-        if (signInTime) {
-            document.getElementById('sign-in-time').innerText = signInTime;
-        } else {
-            document.getElementById('sign-in-time').innerText = 'Not available';
+        // Ensure image paths are correct relative to this HTML file
+        const detectedObjects = {
+            'Hand': 'hand.jpg',
+            'Screen': 'screen.jpg',
+            'Wall': 'wall.jpg',
+            'Unidentifiable Object': 'unidentified_object.jpg'
+        };
+
+        const objectNames = Object.keys(detectedObjects);
+        let currentObjectIndex = 0;
+
+        // Function to update the displayed object and image
+        function updateDetectedObject() {
+            const objectName = objectNames[currentObjectIndex];
+            const objectImage = detectedObjects[objectName];
+
+            document.getElementById('object-name').textContent = objectName;
+            document.getElementById('object-image').src = objectImage;
+
+            // Move to the next object in the list, looping back to the start if necessary
+            currentObjectIndex = (currentObjectIndex + 1) % objectNames.length;
         }
 
-        // Function to get the current time and update the page every second
+        // Update the detected object every 20 seconds
+        setInterval(updateDetectedObject, 20000);
+        updateDetectedObject(); // Initial call to display the first object
+
+        // Function to get the current time and update every second
         function updateTime() {
             const currentTime = new Date().toLocaleTimeString();
             document.getElementById('current-time').innerText = currentTime;
         }
 
-        // Update time every second
         setInterval(updateTime, 1000);
-        updateTime(); // Call it once to set initial time
+        updateTime(); // Initial call
 
-        // Simulated detected objects with corresponding image files
-        const detectedObjects = {
-            'Hand': 'hand.jpg',
-            'Screen': 'screen.jpg',
-            'Wall': 'wall.jpg',
-            'Unidentifiable Object': 'uidentified.jpg'
-            'keyboard': 'keyboard'
-        };
-
-        // Function to update the list of detected objects every 20 seconds
-        function updateObjectList() {
-            const objectList = document.getElementById('object-list');
-            
-            // Get a random object from the list to simulate detection
-            const objectNames = Object.keys(detectedObjects);
-            const randomObject = objectNames[Math.floor(Math.random() * objectNames.length)];
-            
-            // Create a new list item for the detected object
-            const listItem = document.createElement('li');
-            
-            // Create an image element for the object
-            const objectImage = document.createElement('img');
-            objectImage.src = `images/${detectedObjects[randomObject]}`;
-            objectImage.alt = randomObject;
-            objectImage.style.width = '50px'; // Adjust size as needed
-            objectImage.style.marginRight = '10px'; // Space between image and text
-            
-            // Append the image and object name to the list item
-            listItem.appendChild(objectImage);
-            listItem.appendChild(document.createTextNode(randomObject));
-            
-            // Append the new object to the list
-            objectList.appendChild(listItem);
-        }
-
-        // Update object list every 20 seconds
-        setInterval(updateObjectList, 20000);
-
-        // Simulate the first object detection when the page loads
-        updateObjectList();
-
-        // Sign out function (for simulation)
+        // Logout functionality
         document.getElementById('logoutBtn').addEventListener('click', () => {
-            // Clear sign-in time from local storage
-            localStorage.removeItem('signInTime');
             alert("Logged out successfully.");
             window.location.href = 'index.html'; // Redirect to the sign-in page
         });
-    </script>
-
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script>
-      const firebaseConfig = {
-  apiKey: "AIzaSyDskj7mGuZ9JnbglGqoSVIHD_3lM1bE04w",
-  authDomain: "visualii-70dfb.firebaseapp.com",
-  databaseURL: "https://visualii-70dfb.firebaseio.com",
-  projectId: "visualii-70dfb",
-  storageBucket: "visualii-70dfb.appspot.com",
-  messagingSenderId: "1234567890", // This is your messaging sender ID
-  appId: "1:1234567890:web:abc123def456gh789", // This is your app ID
-};
-
-      firebase.initializeApp(firebaseConfig);
     </script>
 </body>
 </html>
