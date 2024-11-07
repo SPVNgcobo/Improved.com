@@ -51,7 +51,7 @@
         updateTime(); // Call it once to set initial time
 
         // Simulated detected objects (this would be replaced with actual detection logic)
-        const detectedObjects = ['Hand', 'Screen', 'Wall', 'Unknown Object', 'Door'];
+        const detectedObjects = ['Hand', 'Screen', 'Wall', 'Unidentifiable Object'];
 
         // Function to update the list of detected objects every 20 seconds
         function updateObjectList() {
@@ -69,7 +69,7 @@
         }
 
         // Update object list every 20 seconds
-        setInterval(updateObjectList, 20000);
+        setInterval(updateObjectList, 10000);
 
         // Simulate the first object detection when the page loads
         updateObjectList();
@@ -82,5 +82,23 @@
             window.location.href = 'index.html'; // Redirect to the sign-in page
         });
     </script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID",
+    measurementId: "YOUR_MEASUREMENT_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+    
 </body>
 </html>
