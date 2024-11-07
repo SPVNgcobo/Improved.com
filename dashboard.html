@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic Object Detection Dashboard</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #f4f4f9; 
+            color: #333;
+        }
+        #main-container { 
+            width: 90%; 
+            max-width: 800px; 
+            margin: 40px auto; 
+            padding: 20px; 
+            background-color: #fff; 
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+            border-radius: 8px;
+        }
+        h1 { text-align: center; color: #4CAF50; }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+            font-size: 16px;
+        }
+        th, td { 
+            padding: 12px; 
+            border: 1px solid #ddd; 
+            text-align: left; 
+        }
+        th { 
+            background-color: #4CAF50; 
+            color: white; 
+            cursor: pointer;
+        }
+        #controls { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-top: 20px; 
+        }
+        #controls input[type="text"] {
+            padding: 6px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button { 
+            background-color: #4CAF50; 
+            color: white; 
+            border: none; 
+            padding: 10px 15px; 
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <div id="main-container">
+        <h1>Object Detection Dashboard</h1>
+        <p><strong>Sign-In Time:</strong> <span id="sign-in-time">--:--</span></p>
+
+        <!-- Controls -->
+        <div id="controls">
+            <input type="text" id="filterInput" placeholder="Filter by object name..." oninput="filterTable()">
+            <button id="exportBtn">Export Data</button>
+        </div>
+
+        <!-- Object Detection Data Table -->
+        <table id="object-list">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Object Name</th>
+                    <th onclick="sortTable(1)">Timestamp</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Detected objects will be listed here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fake data for object detection
+        const detectedObjects = [
+            { name: 'Hand', timestamp: '2024-11-07 09:00:00', image: 'hand.jpg' },
+            { name: 'Screen', timestamp: '2024-11-07 09:05:00', image: 'screen.jpg' },
+            { name: 'Wall', timestamp: '2024-11-07 09:10:00', image: 'wall.jpg' },
+            { name: 'Unidentified Object', timestamp: '2024-11-07 09:15:00', image: 'Uidentified_object.jpg' }
+			//{ name: 'keyboard', timestamp: '2024-11-07 09:15:00', image: 'keyboard.jpg' }
+        ];
+
+        // Display the data in the table
+        function displayDetectedObjects() {
+            const tableBody = document.getElementById('object-list').querySelector('tbody');
+            tableBody.innerHTML = ''; // Clear previous content
+            detectedObjects.forEach(obj => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${obj.name}</td>
+                    <td>${obj.timestamp}</td>
+                    <td><img src="${obj.image}" alt="${obj.name}" style="width:50px; height: 50px; object-fit: cover;"></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Filter table by object name
+        function filterTable() {
+            const filter = document.getElementById('filterInput').value.toLowerCase();
+            const rows = document.getElementById('object-list').querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const name = row.cells[0].textContent.toLowerCase();
+                row.style.display = name.includes(filter) ? '' : 'none';
+            });
+        }
+
+        // Sort table columns
+        function sortTable(columnIndex) {
+            const rows = Array.from(document.getElementById('object-list').querySelectorAll('tbody tr'));
+            const sortedRows = rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+                return cellA.localeCompare(cellB);
+            });
+            const tableBody = document.getElementById('object-list').querySelector('tbody');
+            tableBody.innerHTML = ''; // Clear table body
+            sortedRows.forEach(row => tableBody.appendChild(row)); // Append sorted rows
+        }
+
+        // Export data to a CSV file
+        function exportData() {
+            let data = 'Object Name, Timestamp, Image\n';
+            detectedObjects.forEach(obj => {
+                data += `${obj.name}, ${obj.timestamp}, ${obj.image}\n`;
+            });
+            const blob = new Blob([data], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'detected_objects.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Event listeners
+        document.getElementById('exportBtn').addEventListener('click', exportData);
+        
+        // Display objects on page load
+        displayDetectedObjects();
+    </script>
+</body>
+</html>
