@@ -1,0 +1,19 @@
+.container {
+    width: 300px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+label, input, button {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+}
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
