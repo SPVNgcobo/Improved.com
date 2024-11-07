@@ -3,70 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Object Detection - Decoy Page</title>
+    <title>Sign In</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 </head>
 <body>
-    <div id="decoy-container">
-        <h1>Object Detection</h1>
-        
-        <!-- Simulated Object Detection Status -->
-        <div id="status">
-            <p><strong>Simulated Object Detection:</strong></p>
-            <ul id="object-list">
-                <!-- Detected objects will be listed here -->
-            </ul>
-        </div>
+    <div id="signin-container">
+        <h1>Sign In</h1>
 
-        <!-- Current Time Display -->
-        <div id="time">
-            <p><strong>Current Time:</strong> <span id="current-time"></span></p>
-        </div>
-
-        <button id="logoutBtn">Log Out</button>
+        <!-- Sign In Form -->
+        <form id="signinForm">
+            <input type="text" id="username" placeholder="Username" required><br>
+            <input type="password" id="password" placeholder="Password" required><br>
+            <button type="submit">Sign In</button>
+        </form>
     </div>
 
     <script>
-        // Function to get the current time and update the page every second
-        function updateTime() {
-            const currentTime = new Date().toLocaleTimeString();
-            document.getElementById('current-time').innerText = currentTime;
-        }
+        document.getElementById('signinForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        // Update time every second
-        setInterval(updateTime, 1000);
-        updateTime(); // Call it once to set initial time
+            // Get the current time when sign-in occurs
+            const signInTime = new Date().toLocaleString();
 
-        // Simulated detected objects (this would be replaced with actual detection logic)
-        const detectedObjects = ['Hand', 'Screen', 'Wall', 'Unknown Object', 'Door'];
+            // Store sign-in time in local storage
+            localStorage.setItem('signInTime', signInTime);
 
-        // Function to update the list of detected objects every 20 seconds
-        function updateObjectList() {
-            const objectList = document.getElementById('object-list');
-            
-            // Get a random object from the list to simulate detection
-            const randomObject = detectedObjects[Math.floor(Math.random() * detectedObjects.length)];
-            
-            // Create a new list item for the detected object
-            const listItem = document.createElement('li');
-            listItem.textContent = randomObject;
-            
-            // Append the new object to the list
-            objectList.appendChild(listItem);
-        }
-
-        // Update object list every 20 seconds
-        setInterval(updateObjectList, 20000);
-
-        // Simulate the first object detection when the page loads
-        updateObjectList();
-
-        // Sign out function (for simulation)
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            alert("Logged out successfully.");
-            window.location.href = 'index.html'; // Redirect to the sign-in page
+            // Redirect to main page after sign-in
+            window.location.href = 'main.html'; // Main page
         });
     </script>
 </body>
