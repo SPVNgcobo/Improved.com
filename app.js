@@ -1,35 +1,49 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+// Initialize Firebase (use your own Firebase config)
+const firebaseConfig = {
+  apiKey: "AIzaSyDskj7mGuZ9JnbglGqoSVIHD_3lM1bE04w",
+  authDomain: "visualii-70dfb.firebaseapp.com",
+  databaseURL: "https://visualii-70dfb.firebaseio.com",
+  projectId: "visualii-70dfb",
+  storageBucket: "visualii-70dfb.appspot.com",
+  messagingSenderId: "1234567890", // Replace with your actual messagingSenderId
+  appId: "1:1234567890:web:abc123def456gh789" // Replace with your actual appId
+};
 
-const app = express();
-app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/userLogs', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
-const userSchema = new mongoose.Schema({
-    username: String,
-    email: String,
-    password: String, // Ideally, store hashed passwords
-    createdAt: { type: Date, default: Date.now }
-});
+document.getElementById('signUpBtn').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default form submission
 
-const User = mongoose.model('User', userSchema);
+    // Get the input values
+    const email = document.getElementById('email').value;
+    const name = document.getElementById('name').value;
+    const password = document.getElementById('password').value;
 
-app.post('/signup', async (req, res) => {
-    try {
-        const { username, email, password } = req.body;
-        const newUser = new User({ username, email, password });
-        await newUser.save();
-        res.json({ message: 'User registered successfully!' });
-    } catch (err) {
-        res.status(500).json({ message: 'Error registering user', error: err });
-    }
-});
+    // Firebase sign-up
+    auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Successfully signed up
+            const user = userCredential.user;
 
-app.listen(3000, () => {
-    console.log('Server running on http://localhost:3000');
+            // Show welcome message
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `Welcome, ${name}!`;
+
+            // Redirect to main.html after 2 seconds
+            setTimeout(function() {
+                window.location.href = 'main.html';
+            }, 2000);
+        })
+        .catch((error) => {
+            // Handle errors here
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            // Show error message
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `Error: ${errorMessage}`;
+        });
 });
